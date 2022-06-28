@@ -6,22 +6,43 @@ import {
   navLinks,
   navLinkItem,
   navLinkText,
+  siteTitle,
 } from "./Layout.module.css";
 
 function Layout({ pageTitle, children }) {
+  const data = useStaticQuery(graphql`
+    query {
+      site {
+        siteMetadata {
+          title
+          description
+        }
+      }
+    }
+  `);
 
   return (
       <div className={container}>
         <title>
-          {pageTitle}
+          {pageTitle} | {data.site.siteMetadata.title}
         </title>
+        <header class={siteTitle}>{data.site.siteMetadata.title}</header>
         <nav>
           <ul className={navLinks}>
             <li className={navLinkItem}>
-              <Link className={navLinkText} to="/">Home</Link>
+              <Link className={navLinkText} to="/">
+                Home
+              </Link>
             </li>
             <li className={navLinkItem}>
-              <Link className={navLinkText} to="/about">About</Link>
+              <Link className={navLinkText} to="/about">
+                About
+              </Link>
+            </li>
+            <li className={navLinkItem}>
+              <Link className={navLinkText} to="/blog">
+                Blog
+              </Link>
             </li>
           </ul>
         </nav>
